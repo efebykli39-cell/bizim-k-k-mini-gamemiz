@@ -1,0 +1,1162 @@
+/* =========================================================
+   BİZİM KÜÇÜK MACERAMIZ
+   Platformer UI
+========================================================= */
+
+
+/* =========================================================
+   TEMEL AYARLAR
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+
+    --pixel-font: "Press Start 2P", monospace;
+
+    --bg: #17131d;
+
+    --panel: #2b2131;
+    --panel-light: #3c2c40;
+
+    --border: #80627a;
+
+    --cream: #fff0d2;
+
+    --pink: #f18bab;
+    --pink-light: #ffc1d5;
+
+    --green: #87b86b;
+
+    --gold: #e8bd68;
+
+    --danger: #e47777;
+
+    --shadow: #0d0a10;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+body {
+
+    background:
+        radial-gradient(
+            circle at top,
+            #49364e 0%,
+            #211923 60%,
+            #100c13 100%
+        );
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    font-family: var(--pixel-font);
+
+    color: var(--cream);
+
+}
+
+
+/* =========================================================
+   ANA OYUN
+========================================================= */
+
+#game {
+
+    position: relative;
+
+    width: min(1100px, 96vw);
+
+    aspect-ratio: 16 / 9;
+
+    background: #77a765;
+
+    overflow: hidden;
+
+    border: 6px solid var(--border);
+
+    border-radius: 10px;
+
+    box-shadow:
+
+        0 0 0 5px var(--shadow),
+
+        0 25px 70px
+        rgba(0, 0, 0, 0.55);
+
+}
+
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
+#gameCanvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    image-rendering: pixelated;
+
+    image-rendering: crisp-edges;
+
+    background: #77a765;
+
+}
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
+#hud {
+
+    position: absolute;
+
+    top: 15px;
+
+    left: 15px;
+
+    right: 15px;
+
+    z-index: 5;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    pointer-events: none;
+
+}
+
+
+/* CAN */
+
+#hearts {
+
+    padding: 10px 14px;
+
+    background:
+        rgba(40, 27, 43, 0.9);
+
+    border: 3px solid var(--border);
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    box-shadow:
+        4px 4px 0
+        rgba(0, 0, 0, 0.25);
+
+}
+
+
+/* CHECKPOINT */
+
+#checkpoint {
+
+    padding: 10px 14px;
+
+    background:
+        rgba(40, 27, 43, 0.9);
+
+    border: 3px solid var(--border);
+
+    border-radius: 6px;
+
+    font-size: 9px;
+
+    color: var(--cream);
+
+    box-shadow:
+        4px 4px 0
+        rgba(0, 0, 0, 0.25);
+
+}
+
+
+/* =========================================================
+   ORTAK EKRAN
+========================================================= */
+
+.screen {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 25px;
+
+    background:
+        rgba(13, 9, 16, 0.78);
+
+    backdrop-filter: blur(3px);
+
+}
+
+
+/* =========================================================
+   GİZLİ
+========================================================= */
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+/* =========================================================
+   BAŞLANGIÇ
+========================================================= */
+
+.screen-content {
+
+    width: min(560px, 90%);
+
+    padding: 45px 35px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #49334d,
+            #2b202f
+        );
+
+    border: 5px solid var(--border);
+
+    border-radius: 10px;
+
+    box-shadow:
+
+        0 0 0 4px var(--shadow),
+
+        10px 10px 0
+        rgba(0, 0, 0, 0.3);
+
+}
+
+
+.screen-content h1 {
+
+    font-size: clamp(
+        18px,
+        3vw,
+        30px
+    );
+
+    line-height: 1.7;
+
+    color: var(--cream);
+
+    text-shadow:
+        3px 3px 0
+        #3a283b;
+
+    margin-bottom: 25px;
+
+}
+
+
+.screen-content p {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    color: #f1dfe8;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =========================================================
+   BUTON
+========================================================= */
+
+button {
+
+    font-family: var(--pixel-font);
+
+    cursor: pointer;
+
+    border: 4px solid #713b52;
+
+    background:
+        linear-gradient(
+            180deg,
+            #dc7899,
+            #ae4e70
+        );
+
+    color: white;
+
+    padding: 14px 20px;
+
+    box-shadow:
+        0 5px 0 #522c3c;
+
+    transition:
+        transform 0.08s,
+        filter 0.08s;
+
+}
+
+
+button:hover {
+
+    filter: brightness(1.12);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+button:active {
+
+    transform:
+        translateY(4px);
+
+    box-shadow:
+        0 1px 0 #522c3c;
+
+}
+
+
+/* =========================================================
+   KONTROLLER
+========================================================= */
+
+.controls {
+
+    margin-top: 30px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    font-size: 8px;
+
+    color: #d8c8d5;
+
+}
+
+
+.controls span {
+
+    padding: 8px;
+
+    background: #201722;
+
+    border: 2px solid #5d4659;
+
+    border-radius: 4px;
+
+    color: var(--cream);
+
+}
+
+
+/* =========================================================
+   DİALOG KUTUSU
+========================================================= */
+
+.dialog {
+
+    position: absolute;
+
+    left: 25px;
+    right: 25px;
+
+    bottom: 20px;
+
+    z-index: 15;
+
+    min-height: 125px;
+
+    display: flex;
+
+    gap: 18px;
+
+    padding: 15px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #35273a,
+            #251c29
+        );
+
+    border: 5px solid var(--border);
+
+    border-radius: 8px;
+
+    box-shadow:
+
+        6px 6px 0
+        rgba(0, 0, 0, 0.35);
+
+}
+
+
+/* =========================================================
+   DİALOG PORTRE
+========================================================= */
+
+.dialog-character {
+
+    width: 90px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+#dialogPortrait {
+
+    width: 75px;
+    height: 75px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 42px;
+
+    background: #47324b;
+
+    border: 3px solid var(--border);
+
+    border-radius: 6px;
+
+}
+
+
+/* =========================================================
+   DİALOG İÇERİĞİ
+========================================================= */
+
+.dialog-content {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.dialog-speaker {
+
+    font-size: 12px;
+
+    color: var(--pink-light);
+
+    margin-bottom: 12px;
+
+}
+
+
+.dialog-text {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    color: var(--cream);
+
+    flex: 1;
+
+}
+
+
+.dialog-next {
+
+    align-self: flex-end;
+
+    margin-top: 10px;
+
+    font-size: 7px;
+
+    color: #bdaebe;
+
+}
+
+
+/* =========================================================
+   CHECKPOINT MESAJI
+========================================================= */
+
+.checkpoint-message {
+
+    position: absolute;
+
+    top: 80px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px 20px;
+
+    background:
+        rgba(39, 29, 42, 0.96);
+
+    border: 4px solid var(--gold);
+
+    border-radius: 7px;
+
+    box-shadow:
+        5px 5px 0
+        rgba(0, 0, 0, 0.3);
+
+    text-align: center;
+
+    font-size: 9px;
+
+}
+
+
+.checkpoint-icon {
+
+    font-size: 28px;
+
+}
+
+
+.checkpoint-message span {
+
+    color: var(--pink-light);
+
+    font-size: 7px;
+
+}
+
+
+/* =========================================================
+   POLİS QUIZ
+========================================================= */
+
+.quiz-panel {
+
+    width: min(650px, 95%);
+
+    padding: 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #49344d,
+            #291e2e
+        );
+
+    border: 5px solid var(--border);
+
+    border-radius: 10px;
+
+    box-shadow:
+
+        0 0 0 4px var(--shadow),
+
+        10px 10px 0
+        rgba(0, 0, 0, 0.3);
+
+}
+
+
+.quiz-icon {
+
+    font-size: 55px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.quiz-speaker {
+
+    font-size: 10px;
+
+    color: var(--pink-light);
+
+    margin-bottom: 12px;
+
+}
+
+
+.quiz-panel h2 {
+
+    font-size: 18px;
+
+    color: var(--cream);
+
+    margin-bottom: 18px;
+
+}
+
+
+#quizQuestion {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    color: #f4e5ec;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================================================
+   QUIZ CEVAPLARI
+========================================================= */
+
+#quizAnswers {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+}
+
+
+#quizAnswers button {
+
+    min-height: 55px;
+
+    font-size: 9px;
+
+}
+
+
+.quiz-result {
+
+    min-height: 25px;
+
+    margin-top: 18px;
+
+    font-size: 9px;
+
+    color: var(--pink-light);
+
+}
+
+
+/* =========================================================
+   ŞİFRE EKRANI
+========================================================= */
+
+.code-panel {
+
+    width: min(440px, 95%);
+
+    padding: 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #49344c,
+            #281d2d
+        );
+
+    border: 5px solid var(--gold);
+
+    border-radius: 10px;
+
+    box-shadow:
+
+        0 0 0 4px var(--shadow),
+
+        10px 10px 0
+        rgba(0, 0, 0, 0.35);
+
+}
+
+
+.code-icon {
+
+    font-size: 55px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.code-panel h2 {
+
+    font-size: 18px;
+
+    color: var(--cream);
+
+    margin-bottom: 15px;
+
+}
+
+
+.code-panel p {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+    color: #e9dce4;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =========================================================
+   ŞİFRE GÖSTERGE
+========================================================= */
+
+.code-display {
+
+    width: 220px;
+
+    margin: 0 auto 25px;
+
+    padding: 15px;
+
+    background: #171119;
+
+    border: 4px solid #5f485b;
+
+    color: var(--pink-light);
+
+    font-size: 20px;
+
+    letter-spacing: 8px;
+
+}
+
+
+/* =========================================================
+   NUMPAD
+========================================================= */
+
+.code-buttons {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+
+    width: 260px;
+
+    margin: auto;
+
+}
+
+
+.code-buttons button {
+
+    min-height: 50px;
+
+    padding: 8px;
+
+    font-size: 10px;
+
+}
+
+
+.code-buttons .special {
+
+    background:
+        linear-gradient(
+            180deg,
+            #8c6078,
+            #62445a
+        );
+
+    border-color: #493345;
+
+}
+
+
+.code-message {
+
+    min-height: 20px;
+
+    margin-top: 15px;
+
+    font-size: 8px;
+
+    color: var(--pink-light);
+
+}
+
+
+/* =========================================================
+   FİNAL
+========================================================= */
+
+.ending-panel {
+
+    width: min(650px, 95%);
+
+    padding: 50px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #4c354f,
+            #291e2f
+        );
+
+    border: 5px solid var(--gold);
+
+    border-radius: 10px;
+
+    box-shadow:
+
+        0 0 0 4px var(--shadow),
+
+        0 0 50px
+        rgba(232, 189, 104, 0.2);
+
+}
+
+
+.ending-heart {
+
+    font-size: 65px;
+
+    margin-bottom: 20px;
+
+    animation:
+        heartBeat 1.5s
+        ease-in-out
+        infinite;
+
+}
+
+
+.ending-panel h1 {
+
+    font-size: clamp(
+        18px,
+        3vw,
+        28px
+    );
+
+    line-height: 1.6;
+
+    color: var(--cream);
+
+    margin-bottom: 25px;
+
+}
+
+
+#endingText {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 18px;
+
+    line-height: 1.8;
+
+    color: #f2e2ea;
+
+    margin-bottom: 30px;
+
+}
+
+
+.ending-title {
+
+    font-size: 14px;
+
+    color: var(--pink-light);
+
+    letter-spacing: 5px;
+
+}
+
+
+/* =========================================================
+   KALP ANİMASYONU
+========================================================= */
+
+@keyframes heartBeat {
+
+    0%,
+    100% {
+
+        transform:
+            scale(1);
+
+    }
+
+    50% {
+
+        transform:
+            scale(1.12);
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBİL
+========================================================= */
+
+@media (max-width: 700px) {
+
+    body {
+
+        align-items: flex-start;
+
+        padding-top: 10px;
+
+        overflow: auto;
+
+    }
+
+
+    #game {
+
+        width: 98vw;
+
+        border-width: 4px;
+
+    }
+
+
+    #hud {
+
+        top: 8px;
+
+        left: 8px;
+
+        right: 8px;
+
+    }
+
+
+    #hearts {
+
+        padding: 7px 9px;
+
+        font-size: 9px;
+
+    }
+
+
+    #checkpoint {
+
+        padding: 7px 9px;
+
+        font-size: 6px;
+
+    }
+
+
+    .dialog {
+
+        left: 8px;
+
+        right: 8px;
+
+        bottom: 8px;
+
+        min-height: 95px;
+
+        padding: 8px;
+
+        gap: 8px;
+
+        border-width: 3px;
+
+    }
+
+
+    .dialog-character {
+
+        width: 55px;
+
+    }
+
+
+    #dialogPortrait {
+
+        width: 50px;
+
+        height: 50px;
+
+        font-size: 28px;
+
+    }
+
+
+    .dialog-speaker {
+
+        font-size: 8px;
+
+        margin-bottom: 6px;
+
+    }
+
+
+    .dialog-text {
+
+        font-size: 12px;
+
+    }
+
+
+    .dialog-next {
+
+        font-size: 5px;
+
+    }
+
+
+    #quizAnswers {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .quiz-panel {
+
+        padding: 20px 15px;
+
+    }
+
+
+    .quiz-icon {
+
+        font-size: 40px;
+
+    }
+
+
+    #quizQuestion {
+
+        font-size: 14px;
+
+    }
+
+
+    .code-panel {
+
+        padding: 20px 15px;
+
+    }
+
+
+    .code-buttons {
+
+        width: 220px;
+
+    }
+
+
+    .code-display {
+
+        width: 190px;
+
+        font-size: 16px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SEÇİMİ ENGELLE
+========================================================= */
+
+canvas,
+button {
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+}

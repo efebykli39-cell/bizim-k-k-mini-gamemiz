@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Bizim Küçük Maceramız ❤️</title>
+
+    <!-- Pixel Font -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Oyun Stili -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+
+<body>
+
+    <main id="game">
+
+        <!-- =====================================
+             OYUN ALANI
+        ====================================== -->
+
+        <canvas
+            id="gameCanvas"
+            width="960"
+            height="540"
+        ></canvas>
+
+
+        <!-- =====================================
+             ÜST BİLGİ
+        ====================================== -->
+
+        <div id="hud">
+
+            <div id="hearts">
+                ❤️ ❤️ ❤️
+            </div>
+
+            <div id="checkpoint">
+                CHECKPOINT: 0
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             BAŞLANGIÇ EKRANI
+        ====================================== -->
+
+        <div
+            id="startScreen"
+            class="screen"
+        >
+
+            <div class="screen-content">
+
+                <h1>
+                    BİZİM<br>
+                    KÜÇÜK MACERAMIZ
+                </h1>
+
+                <p>
+                    Küçük bir maceraya<br>
+                    hazır mısın? ❤️
+                </p>
+
+                <button
+                    id="startButton"
+                >
+                    OYUNA BAŞLA
+                </button>
+
+                <div class="controls">
+
+                    <span>← →</span>
+                    Hareket
+
+                    <span>SPACE</span>
+                    Zıpla
+
+                    <span>E</span>
+                    Etkileşim
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             DİALOG SİSTEMİ
+        ====================================== -->
+
+        <div
+            id="dialogBox"
+            class="dialog hidden"
+        >
+
+            <div class="dialog-character">
+
+                <div id="dialogPortrait">
+                    👧
+                </div>
+
+            </div>
+
+
+            <div class="dialog-content">
+
+                <div
+                    id="dialogSpeaker"
+                    class="dialog-speaker"
+                >
+                    Karakter
+                </div>
+
+
+                <div
+                    id="dialogText"
+                    class="dialog-text"
+                >
+                    ...
+                </div>
+
+
+                <div class="dialog-next">
+                    E / SPACE → Devam
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             CHECKPOINT DİALOG
+        ====================================== -->
+
+        <div
+            id="checkpointMessage"
+            class="checkpoint-message hidden"
+        >
+
+            <div class="checkpoint-icon">
+                🚩
+            </div>
+
+            <div>
+                CHECKPOINT
+                <br>
+                <span>
+                    Kaydedildi!
+                </span>
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             POLİS QUIZ
+        ====================================== -->
+
+        <div
+            id="quizScreen"
+            class="screen hidden"
+        >
+
+            <div class="quiz-panel">
+
+                <div class="quiz-icon">
+                    👮
+                </div>
+
+
+                <div
+                    id="quizSpeaker"
+                    class="quiz-speaker"
+                >
+                    POLİS
+                </div>
+
+
+                <h2 id="quizTitle">
+                    Dur bakalım!
+                </h2>
+
+
+                <p id="quizQuestion">
+                    ...
+                </p>
+
+
+                <div id="quizAnswers">
+
+                    <!--
+                        Cevap butonları
+                        JavaScript tarafından
+                        oluşturulacak.
+                    -->
+
+                </div>
+
+
+                <div
+                    id="quizResult"
+                    class="quiz-result"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             FİNAL KAPI ŞİFRESİ
+        ====================================== -->
+
+        <div
+            id="codeScreen"
+            class="screen hidden"
+        >
+
+            <div class="code-panel">
+
+                <div class="code-icon">
+                    🏡
+                </div>
+
+
+                <h2>
+                    KÖY EVİ
+                </h2>
+
+
+                <p>
+                    Kapıyı açmak için<br>
+                    özel tarihimizi gir.
+                </p>
+
+
+                <div
+                    id="codeDisplay"
+                    class="code-display"
+                >
+                    _ _ _ _
+                </div>
+
+
+                <div
+                    id="codeButtons"
+                    class="code-buttons"
+                >
+
+                    <button data-number="1">
+                        1
+                    </button>
+
+                    <button data-number="2">
+                        2
+                    </button>
+
+                    <button data-number="3">
+                        3
+                    </button>
+
+                    <button data-number="4">
+                        4
+                    </button>
+
+                    <button data-number="5">
+                        5
+                    </button>
+
+                    <button data-number="6">
+                        6
+                    </button>
+
+                    <button data-number="7">
+                        7
+                    </button>
+
+                    <button data-number="8">
+                        8
+                    </button>
+
+                    <button data-number="9">
+                        9
+                    </button>
+
+                    <button data-number="0">
+                        0
+                    </button>
+
+                    <button
+                        id="codeClear"
+                        class="special"
+                    >
+                        SIL
+                    </button>
+
+                    <button
+                        id="codeEnter"
+                        class="special"
+                    >
+                        GİR
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="codeMessage"
+                    class="code-message"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             FİNAL
+        ====================================== -->
+
+        <div
+            id="endingScreen"
+            class="screen hidden"
+        >
+
+            <div class="ending-panel">
+
+                <div class="ending-heart">
+                    ❤️
+                </div>
+
+
+                <h1>
+                    MACERA TAMAMLANDI
+                </h1>
+
+
+                <p id="endingText">
+                    ...
+                </p>
+
+
+                <div class="ending-title">
+                    THE END
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
